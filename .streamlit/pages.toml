@@ -1,0 +1,15 @@
+[[pages]]
+path = "KPIS.py"
+name = "KPIS de riesgo"
+
+[[pages]]
+path = "pages/Cortes.py"
+name = "Cortes"
+
+[[pages]]
+path = "pages/Rolls.py"
+name = "Rolls"
+
+[[pages]]
+path = "pages/Cosechas.py"
+name = "Cosechas"
