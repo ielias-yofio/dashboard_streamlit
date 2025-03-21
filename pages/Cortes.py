@@ -413,6 +413,7 @@ N = filtro_dict["top_rolls"]
  
 filtro_BQ = "Fecha_reporte == Fecha_reporte %s %s " % (f7, f12)
 
+
 try:
     YoFio = (st.session_state["BQ"]
             .query("Fecha_reporte in (%s)" % f2)
@@ -491,7 +492,7 @@ else:
     
     st.markdown('### Cortes')
     st.markdown("Saldo de compra de central de abastos o a distribuidor (aún no desembolsado)")
-    flag_sort = ~st.checkbox("Ordenar columnas al revés")
+    flag_sort = not st.checkbox("Ordenar columnas al revés")
     cols = list(temp["Fecha_reporte"].unique())
     cols.sort(reverse=flag_sort)
 
@@ -764,9 +765,16 @@ else:
         kpi_des["Métrica que necesito"] = ""
 
     kpi_des = kpi_des[kpi_selected]
-    
-    formateada, temp = format_column(temp, vista)
-    formateada, YoFio = format_column(YoFio, vista)
+    if vista in ["Municipio", "Estado"]:
+        _cat = st.session_state["cat_municipios"]
+    elif vista == "industry":
+        _cat = st.session_state["cat_industry"]
+    elif vista in ["Analista", "ZONA"]:
+        _cat = st.session_state["cat_advisors"]
+    else:
+        _cat = pd.DataFrame()
+    formateada, temp = format_column(temp, vista, _cat)
+    formateada, YoFio = format_column(YoFio, vista, _cat)
     vista = vista + "_formato" * int(formateada)
 
 
@@ -924,13 +932,3 @@ else:
         del Promedio
     except:
         pass
-
-
-
-
-
-
-
-
-
-
